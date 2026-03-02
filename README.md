@@ -14,10 +14,10 @@
   Гілка: [labs/lab3](https://github.com/pliffdax/backend-basics-labs/tree/labs/lab3)
 
 - **Лабораторна робота №4** — NodeJS (Express): роутинг + шаблонізація, застосунок погоди (/weather/{city})  
-  Статус: в процесі виконання
+  Статус: [labs/lab4](https://github.com/pliffdax/backend-basics-labs/tree/labs/lab4)
 
 - **Лабораторна робота №5** — NodeJS + MongoDB: CRUD + роутінг + вивід JSON  
-  Статус: в процесі виконання
+  Статус: [labs/lab5](https://github.com/pliffdax/backend-basics-labs/tree/labs/lab5)
 
 - **Лабораторна робота №6** — GraphQL: Schema (SDL) + Resolvers + Query/Mutation + Postman  
-  Статус: в процесі виконання
+  Статус: [labs/lab6](https://github.com/pliffdax/backend-basics-labs/tree/labs/lab6)
