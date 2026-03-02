@@ -1,0 +1,15 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Редагування</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="container">
+  <%- include("../partials/nav") %>
+  <h1>Редагувати передплатника</h1>
+  <section class="card">
+    <form method="POST" action="/subscribers/<%= item._id %>?_method=PUT">
+      <label>Ім’я</label><input name="name" value="<%= item.name %>" required>
+      <label>Email</label><input name="email" type="email" value="<%= item.email %>" required>
+      <label>Логін</label><input name="login" value="<%= item.login %>" required>
+      <label>Хеш пароля</label><input name="password_hash" value="<%= item.password_hash %>" required>
+      <button type="submit">Оновити</button>
+    </form>
+  </section>
+  <a class="btn secondary" href="/subscribers">Назад</a>
+</main></body></html>

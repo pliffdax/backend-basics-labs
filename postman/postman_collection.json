@@ -1,0 +1,396 @@
+{
+  "info": {
+    "_postman_id": "b7a7c2d0-9d2d-4a0b-9f1a-9cdbb13e9b5d",
+    "name": "Backend Basics — Lab 6 (GraphQL)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health / Introspection",
+      "item": [
+        {
+          "name": "GraphQL: Introspection (types)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\": \"query { __schema { types { name } } }\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Topics",
+      "item": [
+        {
+          "name": "Query: topics",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\": \"query { topics { _id title createdAt } }\"}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: createTopic (save topicId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "const id = json?.data?.createTopic?._id;",
+                  "if (id) pm.environment.set('topicId', id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($title:String!) { createTopic(title:$title){ _id title } }\",\n  \"variables\": {\n    \"title\": \"Акції\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: updateTopic (uses topicId)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($id:ID!,$title:String!) { updateTopic(id:$id,title:$title){ _id title } }\",\n  \"variables\": {\n    \"id\": \"{{topicId}}\",\n    \"title\": \"Акції та новини\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: deleteTopic (uses topicId)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($id:ID!) { deleteTopic(id:$id) }\",\n  \"variables\": {\n    \"id\": \"{{topicId}}\"\n  }\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscribers",
+      "item": [
+        {
+          "name": "Query: subscribers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\": \"query { subscribers { _id name email login createdAt } }\"}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: createSubscriber (save subscriberId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "const id = json?.data?.createSubscriber?._id;",
+                  "if (id) pm.environment.set('subscriberId', id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($name:String!,$email:String!,$login:String!,$password_hash:String!) { createSubscriber(name:$name,email:$email,login:$login,password_hash:$password_hash){ _id name email login } }\",\n  \"variables\": {\n    \"name\": \"Іван\",\n    \"email\": \"ivan@example.com\",\n    \"login\": \"ivan01\",\n    \"password_hash\": \"hash123\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: updateSubscriber (uses subscriberId)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($id:ID!,$name:String,$email:String,$login:String,$password_hash:String) { updateSubscriber(id:$id,name:$name,email:$email,login:$login,password_hash:$password_hash){ _id name email login } }\",\n  \"variables\": {\n    \"id\": \"{{subscriberId}}\",\n    \"name\": \"Іван Оновлений\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: deleteSubscriber (uses subscriberId)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($id:ID!) { deleteSubscriber(id:$id) }\",\n  \"variables\": {\n    \"id\": \"{{subscriberId}}\"\n  }\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Newsletters",
+      "item": [
+        {
+          "name": "Query: newsletters",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"query\": \"query { newsletters { _id topic_id subject sent_at createdAt } }\"}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: createNewsletter (save newsletterId)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('status 200', function () { pm.response.to.have.status(200); });",
+                  "const json = pm.response.json();",
+                  "const id = json?.data?.createNewsletter?._id;",
+                  "if (id) pm.environment.set('newsletterId', id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($topic_id:ID!,$subject:String!,$body:String!,$sent_at:String) { createNewsletter(topic_id:$topic_id,subject:$subject,body:$body,sent_at:$sent_at){ _id topic_id subject sent_at } }\",\n  \"variables\": {\n    \"topic_id\": \"{{topicId}}\",\n    \"subject\": \"Новини тижня\",\n    \"body\": \"Текст листа...\",\n    \"sent_at\": null\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: updateNewsletter (uses newsletterId)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($id:ID!,$subject:String,$body:String,$sent_at:String) { updateNewsletter(id:$id,subject:$subject,body:$body,sent_at:$sent_at){ _id subject sent_at } }\",\n  \"variables\": {\n    \"id\": \"{{newsletterId}}\",\n    \"subject\": \"Оновлені новини тижня\",\n    \"sent_at\": \"2026-03-02T12:00:00Z\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Mutation: deleteNewsletter (uses newsletterId)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "graphql"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"mutation ($id:ID!) { deleteNewsletter(id:$id) }\",\n  \"variables\": {\n    \"id\": \"{{newsletterId}}\"\n  }\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

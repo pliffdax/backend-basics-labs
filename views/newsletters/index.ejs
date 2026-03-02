@@ -1,0 +1,31 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Листи</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="container">
+  <%- include("../partials/nav") %>
+  <h1>Листи розсилки</h1>
+  <div class="actions">
+    <a class="btn" href="/newsletters/new">Додати</a>
+    <a class="btn secondary" href="/topics">Теми</a>
+    <a class="btn secondary" href="/subscribers">Передплатники</a>
+  </div>
+
+  <section class="card">
+    <table border="1" cellpadding="8">
+      <thead><tr><th>Тема</th><th>Заголовок</th><th>Надіслано</th><th>Дії</th></tr></thead>
+      <tbody>
+      <% items.forEach(i => { %>
+        <tr>
+          <td><%= i.topic_id?.title || "-" %></td>
+          <td><%= i.subject %></td>
+          <td><%= i.sent_at ? new Date(i.sent_at).toLocaleString("uk-UA") : "ще ні" %></td>
+          <td>
+            <a href="/newsletters/<%= i._id %>/edit">Редагувати</a>
+            <form style="display:inline" method="POST" action="/newsletters/<%= i._id %>?_method=DELETE">
+              <button type="submit">Видалити</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </section>
+</main></body></html>

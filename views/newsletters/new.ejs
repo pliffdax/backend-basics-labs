@@ -1,0 +1,21 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Новий лист</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="container">
+  <%- include("../partials/nav") %>
+  <h1>Додати лист</h1>
+  <section class="card">
+    <form method="POST" action="/newsletters">
+      <label>Тема</label>
+      <select name="topic_id" required>
+        <% topics.forEach(t => { %>
+          <option value="<%= t._id %>"><%= t.title %></option>
+        <% }) %>
+      </select>
+
+      <label>Заголовок</label><input name="subject" required>
+      <label>Текст</label><textarea name="body" rows="8" required></textarea>
+      <label>Дата надсилання (необов’язково)</label><input name="sent_at" placeholder="2026-02-28 12:00">
+      <button type="submit">Зберегти</button>
+    </form>
+  </section>
+  <a class="btn secondary" href="/newsletters">Назад</a>
+</main></body></html>

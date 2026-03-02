@@ -1,0 +1,22 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Редагування листа</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="container">
+  <%- include("../partials/nav") %>
+  <h1>Редагувати лист</h1>
+  <section class="card">
+    <form method="POST" action="/newsletters/<%= item._id %>?_method=PUT">
+      <label>Тема</label>
+      <select name="topic_id" required>
+        <% topics.forEach(t => { %>
+          <option value="<%= t._id %>" <%= String(item.topic_id) === String(t._id) ? "selected" : "" %>><%= t.title %></option>
+        <% }) %>
+      </select>
+
+      <label>Заголовок</label><input name="subject" value="<%= item.subject %>" required>
+      <label>Текст</label><textarea name="body" rows="8" required><%= item.body %></textarea>
+      <label>Дата надсилання (необов’язково)</label>
+      <input name="sent_at" value="<%= item.sent_at ? new Date(item.sent_at).toISOString().slice(0,16).replace('T',' ') : '' %>">
+      <button type="submit">Оновити</button>
+    </form>
+  </section>
+  <a class="btn secondary" href="/newsletters">Назад</a>
+</main></body></html>

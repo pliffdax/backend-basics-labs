@@ -1,0 +1,12 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: bbls-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - bbls_mongo_data:/data/db
+
+volumes:
+  bbls_mongo_data:
