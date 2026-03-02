@@ -1,0 +1,31 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Передплатники</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="container">
+  <%- include("../partials/nav") %>
+  <h1>Передплатники</h1>
+  <div class="actions">
+    <a class="btn" href="/subscribers/new">Додати</a>
+    <a class="btn secondary" href="/subscribers/api/list">JSON список</a>
+    <a class="btn secondary" href="/">ЛР4 Погода</a>
+  </div>
+
+  <section class="card">
+    <table border="1" cellpadding="8">
+      <thead><tr><th>Ім’я</th><th>Email</th><th>Логін</th><th>Дії</th></tr></thead>
+      <tbody>
+      <% items.forEach(i => { %>
+        <tr>
+          <td><%= i.name %></td>
+          <td><%= i.email %></td>
+          <td><%= i.login %></td>
+          <td>
+            <a href="/subscribers/<%= i._id %>/edit">Редагувати</a>
+            <form style="display:inline" method="POST" action="/subscribers/<%= i._id %>?_method=DELETE">
+              <button type="submit">Видалити</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </section>
+</main></body></html>

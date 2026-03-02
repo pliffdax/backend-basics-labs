@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Погода — <%= city %></title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <%- include("../partials/nav") %>
+      <h1>Погода у місті: <%= city %></h1>
+
+      <section class="card">
+        <p><strong>Температура:</strong> <%= temp %> °C</p>
+        <p><strong>Відчувається як:</strong> <%= feels %> °C</p>
+        <p><strong>Вологість:</strong> <%= humidity %> %</p>
+        <p><strong>Швидкість вітру:</strong> <%= wind %> м/с</p>
+        <p><strong>Опис:</strong> <%= description %></p>
+      </section>
+
+      <div class="actions">
+        <a class="btn secondary" href="/weather">Назад</a>
+        <a class="btn secondary" href="/">Меню</a>
+        <a class="btn" href="/weather/api/<%= encodeURIComponent(city) %>">JSON</a>
+      </div>
+    </main>
+  </body>
+</html>
