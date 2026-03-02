@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <title>Погода</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Додаток "Погода"</h1>
+
+    <ul>
+      <li><a href="/weather/city/Kyiv">Київ</a></li>
+      <li><a href="/weather/city/London">Лондон</a></li>
+      <li><a href="/weather/city/Paris">Париж</a></li>
+    </ul>
+
+    <form id="form">
+      <input id="city" placeholder="Введіть місто" required>
+      <button type="submit">Показати</button>
+    </form>
+
+    <script>
+      document.getElementById("form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const city = document.getElementById("city").value;
+        window.location.href = "/weather/city/" + city;
+      });
+    </script>
+
+    <br>
+    <a class="btn secondary" href="/">← Меню</a>
+  </main>
+</body>
+</html>
