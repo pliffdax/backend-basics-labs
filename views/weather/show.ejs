@@ -2,23 +2,47 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <title>Погода</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Погода - <%= city %></title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <main class="container">
-    <h1>Погода у місті: <%= city %></h1>
+  <main class="container card weather-card">
+    <p class="badge"><%= sourceLabel %></p>
+    <h1><%= city %></h1>
 
-    <p>Температура: <%= temp %> °C</p>
-    <p>Відчувається як: <%= feels %> °C</p>
-    <p>Вологість: <%= humidity %> %</p>
-    <p>Швидкість вітру: <%= wind %> м/с</p>
-    <p>Опис: <%= description %></p>
+    <div class="weather-grid">
+      <div class="weather-item">
+        <span class="label">Температура</span>
+        <strong><%= temp %> °C</strong>
+      </div>
+      <div class="weather-item">
+        <span class="label">Відчувається як</span>
+        <strong><%= feels %> °C</strong>
+      </div>
+      <div class="weather-item">
+        <span class="label">Вологість</span>
+        <strong><%= humidity %> %</strong>
+      </div>
+      <div class="weather-item">
+        <span class="label">Тиск</span>
+        <strong><%= pressure %> гПа</strong>
+      </div>
+      <div class="weather-item">
+        <span class="label">Швидкість вітру</span>
+        <strong><%= wind %> м/с</strong>
+      </div>
+      <div class="weather-item">
+        <span class="label">Опис</span>
+        <strong><%= description %></strong>
+      </div>
+    </div>
 
-    <br>
-    <a class="btn secondary" href="/weather">← Назад</a>
-    <a class="btn secondary" href="/">Меню</a>
-    <a class="btn" href="/weather/api/<%= city %>">JSON</a>
+    <div class="actions">
+      <a class="btn secondary" href="/weather">← До вибору міста</a>
+      <a class="btn secondary" href="/">На головну</a>
+      <a class="btn" href="/weather/api/<%= encodeURIComponent(city) %>">JSON</a>
+    </div>
   </main>
 </body>
 </html>

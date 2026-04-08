@@ -19,10 +19,19 @@ app.set("views", path.join(ROOT_DIR, "views"));
 app.use(express.static(path.join(ROOT_DIR, "public")));
 
 app.get("/", (_req, res) => {
-  res.render("home");
+  res.render("home", {
+    authorCity: "Kyiv",
+  });
 });
 
 app.use("/weather", weatherRouter);
+
+app.use((req, res) => {
+  res.status(404).render("error", {
+    title: "404",
+    message: "Сторінку не знайдено.",
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

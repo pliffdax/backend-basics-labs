@@ -2,13 +2,16 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <title>Меню</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather App</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <main class="container">
-    <h1>Меню лабораторної №4</h1>
-    <a class="btn" href="/weather">Перейти до погоди</a>
+  <main class="container card center">
+    <h1>Weather App</h1>
+    <p class="lead">Лабораторна робота №4. Node.js, Express, маршрутизація та шаблонізація.</p>
+    <p>У меню погоди доступні готові міста та окремий пункт із місцезнаходженням автора: <strong><%= authorCity %></strong>.</p>
+    <a class="btn" href="/weather">Перейти до перегляду погоди</a>
   </main>
 </body>
 </html>

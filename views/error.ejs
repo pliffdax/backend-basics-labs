@@ -2,14 +2,18 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <title>Помилка</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <main class="container">
-    <h1>Помилка</h1>
-    <p><%= message %></p>
-    <a class="btn secondary" href="/">Меню</a>
+  <main class="container card center">
+    <h1><%= title %></h1>
+    <p class="lead"><%= message %></p>
+    <div class="actions center-actions">
+      <a class="btn secondary" href="/weather">До сторінки погоди</a>
+      <a class="btn" href="/">На головну</a>
+    </div>
   </main>
 </body>
 </html>

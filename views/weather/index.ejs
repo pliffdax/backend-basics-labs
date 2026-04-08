@@ -2,34 +2,76 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <title>Погода</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вибір міста</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <main class="container">
-    <h1>Додаток "Погода"</h1>
+  <main class="container card">
+    <h1>Оберіть місто</h1>
+    <p class="lead">Меню посилань сформовано у шаблоні. Один із пунктів позначає місцезнаходження автора.</p>
 
-    <ul>
-      <li><a href="/weather/city/Kyiv">Київ</a></li>
-      <li><a href="/weather/city/London">Лондон</a></li>
-      <li><a href="/weather/city/Paris">Париж</a></li>
-    </ul>
+    <nav class="city-list" aria-label="Меню міст">
+      <% cities.forEach((item) => { %>
+        <a class="btn city-btn" href="/weather/<%= encodeURIComponent(item.value) %>">
+          <%= item.label %>
+          <% if (item.isAuthorLocation) { %>
+            <span class="city-note">(місцезнаходження автора)</span>
+          <% } %>
+        </a>
+      <% }) %>
+    </nav>
 
-    <form id="form">
-      <input id="city" placeholder="Введіть місто" required>
-      <button type="submit">Показати</button>
+    <form id="city-form" class="search-form">
+      <label for="city">Або введіть назву міста вручну</label>
+      <div class="row">
+        <input id="city" name="city" placeholder="Наприклад, Zhytomyr" required>
+        <button type="submit">Показати погоду</button>
+      </div>
     </form>
 
-    <script>
-      document.getElementById("form").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const city = document.getElementById("city").value;
-        window.location.href = "/weather/city/" + city;
-      });
-    </script>
-
-    <br>
-    <a class="btn secondary" href="/">← Меню</a>
+    <div class="actions">
+      <button id="location-button" type="button" class="btn secondary">Погода у моєму місцезнаходженні</button>
+      <a class="btn secondary" href="/">← На головну</a>
+    </div>
   </main>
+
+  <script>
+    const form = document.getElementById("city-form");
+    const cityInput = document.getElementById("city");
+    const locationButton = document.getElementById("location-button");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const city = cityInput.value.trim();
+
+      if (!city) {
+        return;
+      }
+
+      window.location.href = "/weather/" + encodeURIComponent(city);
+    });
+
+    locationButton.addEventListener("click", function () {
+      if (!navigator.geolocation) {
+        window.location.href = "/weather?city=Kyiv";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const params = new URLSearchParams({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+
+          window.location.href = "/weather/?" + params.toString();
+        },
+        function () {
+          window.location.href = "/weather?city=Kyiv";
+        },
+      );
+    });
+  </script>
 </body>
 </html>
